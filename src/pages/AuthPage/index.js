@@ -2,6 +2,7 @@ import { useState } from "react";
 import LoginForm from "../../components/LoginForm";
 import RegistrationForm from "../../components/RegistrationForm";
 import styled from "styled-components";
+import backGroundImage from "../../assets/images/backGroundImage.jpg"
 
 export default function AuthPage() {
   const [registering, setregistering] = useState(false);
@@ -19,5 +20,7 @@ export default function AuthPage() {
 }
 
 const Container = styled.div`
-
+  background-image: url(${backGroundImage});
+  background-size: 100%;
+  height: 100vh;
 `;
