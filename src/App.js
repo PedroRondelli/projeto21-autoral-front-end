@@ -7,7 +7,7 @@ function App() {
     <GlobalStyle/>
     <BrowserRouter>
     <Routes>
-      <Route path="/login" element={<AuthPage/>} />
+      <Route path="/" element={<AuthPage/>} />
     </Routes>
     </BrowserRouter>
     </>

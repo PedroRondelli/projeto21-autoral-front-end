@@ -49,5 +49,6 @@ button{
 a{
 	cursor: pointer;
 }
+
 `;
 export default GlobalStyle;
