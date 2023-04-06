@@ -8,11 +8,16 @@ export default function AuthPage() {
   const [registering, setregistering] = useState(false);
   return (
     <Container>
-      <StudioName>RONDELLI TATTOO</StudioName>
+      <StudioName className="letterPattern">RONDELLI TATTOO</StudioName>
       {registering ? (
         <RegistrationForm setregistering={setregistering} />
       ) : (
-        <LoginForm setregistering={setregistering} />
+        <LoginForm />
+      )}
+      {!registering && (
+        <RegistrationLink onClick={()=>setregistering(true)} className="letterPattern">
+          É NOVO POR AQUI ? CADASTRE-SE !
+        </RegistrationLink>
       )}
     </Container>
   );
@@ -26,22 +31,15 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 `;
 const StudioName = styled.span`
-  font-family: "Saira Stencil One";
-  font-style: normal;
-  font-weight: 400;
   font-size: 10vw;
-  line-height: 201px;
-  width: 90vw;
-  text-align: center;
-  color: #ffffff;
 
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
-    0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
-    0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
-    0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
-    0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
-    0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
-    0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke: 0.5vw black;
+`;
+const RegistrationLink = styled.a`
+  font-size: 2vw;
+
+  -webkit-text-stroke: 0.1vw black;
 `;

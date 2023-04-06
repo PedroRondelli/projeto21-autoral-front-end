@@ -1,12 +1,29 @@
+import { useState } from "react";
 import styled from "styled-components";
+import handleForm from "../auxiliaries/handleForm";
 
-export default function LoginForm({ setregistering }) {
+export default function LoginForm() {
+  const [form, setForm] = useState({ email: "", password: "" });
   return (
     <>
       <Login>
-        <input placeholder="EMAIL" disabled={false} type="email" />
-        <input placeholder="SENHA" disabled={false} type="password" />
-        <ReadyButton type="submit">PRONTO</ReadyButton>
+        <input
+          onChange={(e) => handleForm(e, form, setForm)}
+          name="email"
+          placeholder="EMAIL"
+          disabled={false}
+          type="email"
+        />
+        <input
+          onChange={(e) => handleForm(e, form, setForm)}
+          name="password"
+          placeholder="SENHA"
+          disabled={false}
+          type="password"
+        />
+        <ReadyButton disabled={false} type="submit">
+          PRONTO
+        </ReadyButton>
       </Login>
     </>
   );
@@ -17,6 +34,7 @@ const Login = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 
   input {
     width: 90%;
@@ -34,7 +52,6 @@ const Login = styled.form`
       font-size: 2vw;
       line-height: 57px;
       color: black;
-      
     }
   }
 `;

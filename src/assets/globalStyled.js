@@ -50,5 +50,12 @@ a{
 	cursor: pointer;
 }
 
+.letterPattern{
+  font-family: "Saira Stencil One";
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+  color: #ffffff;
+}
 `;
 export default GlobalStyle;
