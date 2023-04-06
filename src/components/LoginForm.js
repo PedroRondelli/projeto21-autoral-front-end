@@ -1,12 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
 import handleForm from "../auxiliaries/handleForm";
+import singin from "../services/singinApi";
 
 export default function LoginForm() {
   const [form, setForm] = useState({ email: "", password: "" });
   return (
     <>
-      <Login>
+      <Login onSubmit={()=>singin(form)} >
         <input
           onChange={(e) => handleForm(e, form, setForm)}
           name="email"
