@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginForm from "../../components/LoginForm";
 import RegistrationForm from "../../components/RegistrationForm";
 import styled from "styled-components";
 import backGroundImage from "../../assets/images/backGroundImage.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
   const [registering, setregistering] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("rondelli_token");
+    if (token) {
+      navigate("/edition");
+    }
+  });
+
   return (
     <Container>
       <StudioName className="letterPattern">RONDELLI TATTOO</StudioName>
@@ -15,7 +24,10 @@ export default function AuthPage() {
         <LoginForm />
       )}
       {!registering && (
-        <RegistrationLink onClick={()=>setregistering(true)} className="letterPattern">
+        <RegistrationLink
+          onClick={() => setregistering(true)}
+          className="letterPattern"
+        >
           É NOVO POR AQUI ? CADASTRE-SE !
         </RegistrationLink>
       )}
