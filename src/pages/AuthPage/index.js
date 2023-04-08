@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import LoginForm from "../../components/LoginForm";
 import RegistrationForm from "../../components/RegistrationForm";
 import styled from "styled-components";
-import backGroundImage from "../../assets/images/backGroundImage.jpg";
 import { useNavigate } from "react-router-dom";
+import { Container } from "../../assets/Container";
+import { StudioName } from "../../assets/StudioName";
 
 export default function AuthPage() {
   const [registering, setregistering] = useState(false);
@@ -11,7 +12,7 @@ export default function AuthPage() {
   useEffect(() => {
     const token = localStorage.getItem("rondelli_token");
     if (token) {
-      navigate("/edition");
+      navigate("/profile");
     }
   });
 
@@ -35,21 +36,7 @@ export default function AuthPage() {
   );
 }
 
-const Container = styled.div`
-  background-image: url(${backGroundImage});
-  background-size: 100%;
-  height: 100vh;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-`;
-const StudioName = styled.span`
-  font-size: 10vw;
-
-  -webkit-text-stroke: 0.5vw black;
-`;
 const RegistrationLink = styled.a`
   font-size: 2vw;
 
