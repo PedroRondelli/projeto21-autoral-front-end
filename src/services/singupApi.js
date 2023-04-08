@@ -1,14 +1,15 @@
 import axios from "axios";
 
-export default function singup(e,form) {
-  e.preventDefault()
+export default function singup(e, form, setregistering) {
+  e.preventDefault();
+  console.log("chamou singup");
   axios
     .post("http://localhost:4000/tattoArtist/registration", form)
-    .then((resp) => {
-      
+    .then(() => {
+      alert("Cadastro Feito");
+      setregistering(false);
     })
-    .catch((error) => {
-        alert(error.response.data)
+    .catch(() => {
+      alert("Erro no cadastro");
     });
 }
-

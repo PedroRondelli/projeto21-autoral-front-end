@@ -8,7 +8,7 @@ export default function RegistrationForm({setregistering}){
     const [form, setForm] = useState({ email: "", password: "",confirmation:"" });
   return (
     <>
-      <AuthForm onSubmit={(e) => singup(e,form)}>
+      <AuthForm onSubmit={(e) => singup(e,form,setregistering)}>
         <input
           required
           onChange={(e) => handleForm(e, form, setForm)}
