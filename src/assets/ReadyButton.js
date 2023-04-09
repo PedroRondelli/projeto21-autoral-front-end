@@ -6,6 +6,8 @@ export const ReadyButton = styled.button`
   height: auto;
   width: 17vw;
 
+  display: ${(props) => (props.formDone ? "none" : "initial")};
+
   font-family: "Saira Stencil One";
   font-style: normal;
   font-weight: 400;
