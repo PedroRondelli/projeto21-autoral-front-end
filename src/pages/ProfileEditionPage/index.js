@@ -5,6 +5,7 @@ import backGroundImage from "../../assets/images/backGroundImage.jpg";
 import profilePic from "../../assets/images/profile.jpeg";
 import handleForm from "../../auxiliaries/handleForm";
 import { ReadyButton } from "../../assets/ReadyButton";
+import editProfile from "../../services/editProfileApi";
 export default function EditionProfile() {
   const [formDone, setFormDone] = useState(false);
   const [form, setForm] = useState({
@@ -28,6 +29,8 @@ export default function EditionProfile() {
       form.thank !== ""
     ) {
       setFormDone(true);
+    } else {
+      setFormDone(false);
     }
   });
   return (
@@ -68,8 +71,7 @@ export default function EditionProfile() {
         <img src={profilePic} alt="profile pic" />
         <ReadyButton
           formDone={!formDone}
-          onClick={() => alert("click")}
-          
+          onClick={(e) => editProfile(form, navigate)}
         >
           PRONTO
         </ReadyButton>
