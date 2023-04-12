@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "../../assets/Container";
 import { StudioName } from "../../assets/StudioName";
 
+
 export default function AuthPage() {
   const [registering, setregistering] = useState(false);
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function AuthPage() {
     <Container>
       <StudioName className="letterPattern">RONDELLI TATTOO</StudioName>
       {registering ? (
-        <RegistrationForm setregistering={setregistering} />
+        <RegistrationForm  setregistering={setregistering} />
       ) : (
         <LoginForm />
       )}

@@ -3,12 +3,15 @@ import { ReadyButton } from "../assets/ReadyButton";
 import { useState } from "react";
 import singup from "../services/singupApi";
 import { AuthForm } from "../assets/AuthForm";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function RegistrationForm({setregistering}){
     const [form, setForm] = useState({ email: "", password: "",confirmation:"" });
+    const supabase = useSupabaseClient();
+    
   return (
     <>
-      <AuthForm onSubmit={(e) => singup(e,form,setregistering)}>
+      <AuthForm onSubmit={(e) => singup(e,form,setregistering,supabase)}>
         <input
           required
           onChange={(e) => handleForm(e, form, setForm)}
