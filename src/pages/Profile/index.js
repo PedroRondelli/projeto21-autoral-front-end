@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import profilePic from "../../assets/images/profile.jpeg";
 import { Container } from "../../assets/Container";
@@ -7,14 +7,16 @@ import { ReadyButton } from "../../assets/ReadyButton";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import fetchArts from "../../auxiliaries/fetchArts";
 import fetchProfilePic from "../../auxiliaries/fechProfilePic";
+import ProfilePicContext from "../../contexts/profilePicContext";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
   const slots = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
   const [arts, setArts] = useState([]);
-  const [profileImg, setProfileImage] = useState({});
-  console.log(profileImg)
-  console.log(process.env.REACT_APP_PROFILE + profileImg.name)
+  // const [profileImg, setProfileImage] = useState({});
+  const { profileImg, setProfileImage } = useContext(ProfilePicContext);
+  console.log(profileImg);
+  console.log(process.env.REACT_APP_PROFILE + profileImg.name);
 
   const navigate = useNavigate();
 
@@ -82,7 +84,6 @@ export default function Profile() {
             />
           )}
         </ProfilePic>
-        {/* <img src={profilePic} alt="profile pic" /> */}
         <ReadyButton onClick={() => navigate("/edition")}>EDITAR</ReadyButton>
       </PhotoContainer>
       <Portfolio>
