@@ -4,29 +4,55 @@ import styled from "styled-components";
 import profilePic from "../../assets/images/profile.jpeg";
 import { Container } from "../../assets/Container";
 import { ReadyButton } from "../../assets/ReadyButton";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import fetchArts from "../../auxiliaries/fetchArts";
+import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
-  const user = useUser();
+  const slots = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
   const [arts, setArts] = useState([]);
-  const navigate = useNavigate();
-  console.log(arts);
+  const [profileImg, setProfileImage] = useState({});
+  console.log(profileImg)
+  console.log(process.env.REACT_APP_PROFILE + profileImg.name)
 
-  async function uploadNewArt(e) {
+  const navigate = useNavigate();
+
+  async function uploadNewArt(e, slot) {
     e.preventDefault();
     const file = e.target.files[0];
-    console.log(file);
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from("photos")
-      .upload("public/avatar4", file, {
-        cacheControl: "3600",
-        upsert: false,
+      .upload(`public/${slot}slot`, file, {
+        cacheControl: "10",
+        upsert: true,
       });
     if (error) {
       console.log(error);
+    } else {
+      fetchArts(supabase).then((resp) => setArts(resp));
+    }
+  }
+  async function uploadProfilePic(e) {
+    e.preventDefault();
+    const file = e.target.files[0];
+
+    const { error } = await supabase.storage
+      .from("profilePic")
+      .upload(`public/profilePic`, file, {
+        cacheControl: "10",
+        upsert: true,
+      });
+    if (error) {
+      console.log(error);
+    } else {
+      fetchProfilePic(supabase).then((resp) => {
+        const isThereProfilePic = resp.find(
+          (element) => element.name === "profilePic"
+        );
+        if (isThereProfilePic) setProfileImage(isThereProfilePic);
+      });
     }
   }
   useEffect(() => {
@@ -36,21 +62,49 @@ export default function Profile() {
     }
 
     fetchArts(supabase).then((resp) => setArts(resp));
+    fetchProfilePic(supabase).then((resp) => {
+      const isThereProfilePic = resp.find(
+        (element) => element.name === "profilePic"
+      );
+      if (isThereProfilePic) setProfileImage(isThereProfilePic);
+    });
   }, []);
 
   return (
     <Container>
       <PhotoContainer>
-        <img src={profilePic} alt="profile pic" />
+        <ProfilePic>
+          <input onChange={(e) => uploadProfilePic(e)} type="file"></input>
+          {profileImg.name !== undefined && (
+            <img
+              src={process.env.REACT_APP_PROFILE + profileImg.name}
+              alt="profile pic"
+            />
+          )}
+        </ProfilePic>
+        {/* <img src={profilePic} alt="profile pic" /> */}
         <ReadyButton onClick={() => navigate("/edition")}>EDITAR</ReadyButton>
       </PhotoContainer>
       <Portfolio>
-        {arts.map((e, i) => {
-          const url = process.env.REACT_APP_BUCKET + "/" + e.name;
+        {slots.map((e, i) => {
+          const isThereArtForThisSlot = arts.find(
+            (element) => element.name.replace("slot", "") === e.id.toString()
+          );
+
           return (
-            <Art url={url} key={i}>
-              <input onChange={(e) => uploadNewArt(e)} type="file"></input>
-              <img alt={`Art${i}`} src={url} />
+            <Art>
+              <input
+                onChange={(event) => uploadNewArt(event, e.id)}
+                type="file"
+              ></input>
+              {isThereArtForThisSlot && (
+                <img
+                  src={
+                    process.env.REACT_APP_BUCKET + isThereArtForThisSlot.name
+                  }
+                  alt={`Art${e.id}`}
+                />
+              )}
             </Art>
           );
         })}
@@ -70,20 +124,38 @@ const PhotoContainer = styled.div`
   img {
     width: 140px;
     height: 140px;
-    background: blue;
+
     border-radius: 70px;
     filter: drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.35));
   }
+`;
+const ProfilePic = styled.label`
+  width: 140px;
+  height: 140px;
+
+  background: url(${profilePic});
+  background-size: 100%;
+
+  input {
+    display: none;
+  }
+  cursor: pointer;
+
+  border-radius: 70px;
+  filter: drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.35));
 `;
 const Art = styled.label`
   height: 75%;
   width: 10vw;
   border-radius: 32px;
+  background-color: white;
 
   img {
     height: 100%;
     width: 10vw;
     border-radius: 32px;
+    /* display: ${(props) =>
+      props.status === "empty" ? "none" : "initial"}; */
   }
 
   input {
