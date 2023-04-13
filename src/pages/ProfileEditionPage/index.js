@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import backGroundImage from "../../assets/images/backGroundImage.jpg";
@@ -6,7 +6,11 @@ import profilePic from "../../assets/images/profile.jpeg";
 import handleForm from "../../auxiliaries/handleForm";
 import { ReadyButton } from "../../assets/ReadyButton";
 import editProfile from "../../services/editProfileApi";
+import ProfilePicContext from "../../contexts/profilePicContext";
+import fetchProfilePic from "../../auxiliaries/fechProfilePic";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 export default function EditionProfile() {
+  const supabase = useSupabaseClient();
   const [formDone, setFormDone] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -15,6 +19,7 @@ export default function EditionProfile() {
     specialties: "",
     thank: "",
   });
+  const { profileImg, setProfileImage } = useContext(ProfilePicContext);
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("rondelli_token");
@@ -32,6 +37,12 @@ export default function EditionProfile() {
     } else {
       setFormDone(false);
     }
+    fetchProfilePic(supabase).then((resp) => {
+      const isThereProfilePic = resp.find(
+        (element) => element.name === "profilePic"
+      );
+      if (isThereProfilePic) setProfileImage(isThereProfilePic);
+    });
   });
   return (
     <Container>
@@ -68,7 +79,12 @@ export default function EditionProfile() {
         ></input>
       </Form>
       <PhotoContainer>
-        <img src={profilePic} alt="profile pic" />
+        {profileImg.name !== undefined && (
+          <img
+            src={process.env.REACT_APP_PROFILE + profileImg.name}
+            alt="profile pic"
+          />
+        )}
         <ReadyButton
           formDone={!formDone}
           onClick={(e) => editProfile(form, navigate)}

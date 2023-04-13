@@ -8,6 +8,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import fetchArts from "../../auxiliaries/fetchArts";
 import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 import ProfilePicContext from "../../contexts/profilePicContext";
+import logout from "../../services/logout";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
@@ -15,8 +16,6 @@ export default function Profile() {
   const [arts, setArts] = useState([]);
   // const [profileImg, setProfileImage] = useState({});
   const { profileImg, setProfileImage } = useContext(ProfilePicContext);
-  console.log(profileImg);
-  console.log(process.env.REACT_APP_PROFILE + profileImg.name);
 
   const navigate = useNavigate();
 
@@ -85,6 +84,11 @@ export default function Profile() {
           )}
         </ProfilePic>
         <ReadyButton onClick={() => navigate("/edition")}>EDITAR</ReadyButton>
+        <ion-icon
+          onClick={() => logout(supabase, navigate)}
+          size="large"
+          name="exit-outline"
+        ></ion-icon>
       </PhotoContainer>
       <Portfolio>
         {slots.map((e, i) => {
@@ -128,6 +132,14 @@ const PhotoContainer = styled.div`
 
     border-radius: 70px;
     filter: drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.35));
+  }
+  ion-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+
+    cursor: pointer;
   }
 `;
 const ProfilePic = styled.label`

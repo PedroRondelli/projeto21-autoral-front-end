@@ -9,14 +9,12 @@ function App() {
     <>
       <GlobalStyle />
       <BrowserRouter>
-      <ProfilePicProvider>
-        <Routes>
-          <Route path="/" element={<AuthPage />} />
-          
+        <ProfilePicProvider>
+          <Routes>
+            <Route path="/" element={<AuthPage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/edition" element={<EditionProfile />} />
-          
-        </Routes>
+          </Routes>
         </ProfilePicProvider>
       </BrowserRouter>
     </>
