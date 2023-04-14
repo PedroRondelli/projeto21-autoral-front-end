@@ -99,6 +99,10 @@ const Container = styled.div`
   display: flex;
   background-image: url(${backGroundImage});
   background-size: 100%;
+  @media (max-width: 414px) {
+    flex-direction: column-reverse;
+  }
+  box-sizing: border-box;
 `;
 const Form = styled.form`
   width: 50vw;
@@ -122,10 +126,20 @@ const Form = styled.form`
     box-sizing: border-box;
 
     font-family: Saira Stencil One;
-    font-size: 32px;
+    font-size: 2vw;
     font-weight: 400;
     line-height: 50px;
     letter-spacing: 0em;
+  }
+  @media (max-width: 414px) {
+    width: 100vw;
+    justify-content: flex-start;
+    input {
+      font-size: 3vw;
+      margin: 10px auto;
+      height: 8vh;
+      width: 100%;
+    }
   }
 `;
 const PhotoContainer = styled.div`
@@ -143,5 +157,9 @@ const PhotoContainer = styled.div`
     height: 140px;
     background: blue;
     border-radius: 70px;
+  }
+  @media (max-width: 414px) {
+    width: 100vw;
+    height: 30vh;
   }
 `;

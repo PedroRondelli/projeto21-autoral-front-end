@@ -14,7 +14,6 @@ export default function Profile() {
   const supabase = useSupabaseClient();
   const slots = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
   const [arts, setArts] = useState([]);
-  // const [profileImg, setProfileImage] = useState({});
   const { profileImg, setProfileImage } = useContext(ProfilePicContext);
 
   const navigate = useNavigate();
@@ -158,10 +157,12 @@ const ProfilePic = styled.label`
   filter: drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.35));
 `;
 const Art = styled.label`
-  height: 75%;
-  width: 10vw;
+  height: 90%;
+  width: 30%;
   border-radius: 32px;
   background-color: white;
+  display: flex;
+  justify-content: center;
 
   img {
     height: 100%;
@@ -175,11 +176,14 @@ const Art = styled.label`
     display: none;
   }
   cursor: pointer;
+  /* @media(max-width: 414px){
+    width: 20vw;
+  } */
 `;
 
 const Portfolio = styled.div`
   width: 100vw;
-  height: 40vh;
+  min-height: 40vh;
   background-color: #444040;
   box-shadow: 0px -10px 4px rgba(0, 0, 0, 0.5);
 
@@ -188,4 +192,9 @@ const Portfolio = styled.div`
 
   display: flex;
   justify-content: space-around;
+
+  @media(max-width: 414px){
+    flex-wrap: nowrap;
+    justify-content: initial;
+  }
 `;
