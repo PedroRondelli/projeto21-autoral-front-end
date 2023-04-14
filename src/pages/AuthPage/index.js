@@ -39,7 +39,8 @@ export default function AuthPage() {
 
 
 const RegistrationLink = styled.a`
-  font-size: 2vw;
+  font-size: 4vw;
 
-  -webkit-text-stroke: 0.1vw black;
+  -webkit-text-stroke: 0.2vw black;
+
 `;
