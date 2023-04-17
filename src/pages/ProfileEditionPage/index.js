@@ -133,6 +133,7 @@ const Form = styled.form`
   }
   @media (max-width: 414px) {
     width: 100vw;
+    height:70vh;
     justify-content: flex-start;
     input {
       font-size: 3vw;

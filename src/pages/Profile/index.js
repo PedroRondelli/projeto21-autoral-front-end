@@ -2,13 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import profilePic from "../../assets/images/profile.jpeg";
-import { Container } from "../../assets/Container";
 import { ReadyButton } from "../../assets/ReadyButton";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import fetchArts from "../../auxiliaries/fetchArts";
 import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 import ProfilePicContext from "../../contexts/profilePicContext";
 import logout from "../../services/logout";
+import backGroundImage from "../../assets/images/backGroundImage.jpg";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
@@ -25,7 +25,7 @@ export default function Profile() {
     const { error } = await supabase.storage
       .from("photos")
       .upload(`public/${slot}slot`, file, {
-        cacheControl: "10",
+        cacheControl: "1",
         upsert: true,
       });
     if (error) {
@@ -41,7 +41,7 @@ export default function Profile() {
     const { error } = await supabase.storage
       .from("profilePic")
       .upload(`public/profilePic`, file, {
-        cacheControl: "10",
+        cacheControl: "1",
         upsert: true,
       });
     if (error) {
@@ -94,9 +94,8 @@ export default function Profile() {
           const isThereArtForThisSlot = arts.find(
             (element) => element.name.replace("slot", "") === e.id.toString()
           );
-
           return (
-            <Art>
+            <Art key={i}>
               <input
                 onChange={(event) => uploadNewArt(event, e.id)}
                 type="file"
@@ -123,7 +122,7 @@ const PhotoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-
+  box-sizing: border-box;
   padding: 10px;
   img {
     width: 140px;
@@ -139,6 +138,13 @@ const PhotoContainer = styled.div`
     color: white;
 
     cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    height: 30vh;
+    justify-content: center;
+    button {
+      margin-top: 15px;
+    }
   }
 `;
 const ProfilePic = styled.label`
@@ -157,8 +163,8 @@ const ProfilePic = styled.label`
   filter: drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.35));
 `;
 const Art = styled.label`
-  height: 90%;
-  width: 30%;
+  height: 250px;
+  width: 20%;
   border-radius: 32px;
   background-color: white;
   display: flex;
@@ -166,19 +172,20 @@ const Art = styled.label`
 
   img {
     height: 100%;
-    width: 10vw;
+    width: 100%;
     border-radius: 32px;
-    /* display: ${(props) =>
-      props.status === "empty" ? "none" : "initial"}; */
   }
 
   input {
     display: none;
   }
   cursor: pointer;
-  /* @media(max-width: 414px){
-    width: 20vw;
-  } */
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 300px;
+    margin: 10px auto;
+  }
 `;
 
 const Portfolio = styled.div`
@@ -193,8 +200,18 @@ const Portfolio = styled.div`
   display: flex;
   justify-content: space-around;
 
-  @media(max-width: 414px){
-    flex-wrap: nowrap;
-    justify-content: initial;
+  @media (max-width: 768px) {
+    min-height: 70vh;
+    flex-direction: column;
   }
+`;
+const Container = styled.div`
+  background-image: url(${backGroundImage});
+  background-size: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;

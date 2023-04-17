@@ -7,7 +7,6 @@ export default async function fetchProfilePic(supabase) {
         });
   
       if (error) {
-          console.log("deu erro")
         return error;
       } else {
         return data;
