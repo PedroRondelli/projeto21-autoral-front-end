@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import backGroundImage from "../../assets/images/backGroundImage.jpg";
-import profilePic from "../../assets/images/profile.jpeg";
 import handleForm from "../../auxiliaries/handleForm";
 import { ReadyButton } from "../../assets/ReadyButton";
 import editProfile from "../../services/editProfileApi";
