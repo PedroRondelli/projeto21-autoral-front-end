@@ -8,7 +8,7 @@ export default function editProfile(form, navigate) {
   };
 
   axios
-    .post("http://localhost:4000/tattoArtist/profile", form, config)
+    .post(process.env.REACT_APP_BACKURL + "/tattoArtist/profile", form, config)
     .then((resp) => {
       alert("Perfil Atualizado !");
       navigate("/profile");
