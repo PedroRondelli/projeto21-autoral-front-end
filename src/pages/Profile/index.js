@@ -11,6 +11,7 @@ import logout from "../../services/logout";
 import backGroundImage from "../../assets/images/backGroundImage.jpg";
 import { uploadNewArt } from "../../auxiliaries/uploadArt";
 import { uploadProfilePic } from "../../auxiliaries/uploadProfilePic";
+import { ProfilePicSlot } from "../../components/ProfilePicSlot";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
@@ -38,18 +39,7 @@ export default function Profile() {
   return (
     <Container>
       <PhotoContainer>
-        <ProfilePic>
-          <input
-            onChange={(e) => uploadProfilePic(e, supabase, setProfileImage)}
-            type="file"
-          ></input>
-          {profileImg.name !== undefined && (
-            <img
-              src={process.env.REACT_APP_PROFILE + profileImg.name}
-              alt="profile pic"
-            />
-          )}
-        </ProfilePic>
+        <ProfilePicSlot />
         <ReadyButton onClick={() => navigate("/edition")}>EDITAR</ReadyButton>
         <ion-icon
           onClick={() => logout(supabase, navigate)}
