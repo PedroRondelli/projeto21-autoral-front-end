@@ -9,6 +9,8 @@ import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 import ProfilePicContext from "../../contexts/profilePicContext";
 import logout from "../../services/logout";
 import backGroundImage from "../../assets/images/backGroundImage.jpg";
+import { uploadNewArt } from "../../auxiliaries/uploadArt";
+import { uploadProfilePic } from "../../auxiliaries/uploadProfilePic";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
@@ -18,43 +20,6 @@ export default function Profile() {
 
   const navigate = useNavigate();
 
-  async function uploadNewArt(e, slot) {
-    e.preventDefault();
-    const file = e.target.files[0];
-
-    const { error } = await supabase.storage
-      .from("photos")
-      .upload(`public/${slot}slot`, file, {
-        cacheControl: "1",
-        upsert: true,
-      });
-    if (error) {
-      console.log(error);
-    } else {
-      fetchArts(supabase).then((resp) => setArts(resp));
-    }
-  }
-  async function uploadProfilePic(e) {
-    e.preventDefault();
-    const file = e.target.files[0];
-
-    const { error } = await supabase.storage
-      .from("profilePic")
-      .upload(`public/profilePic`, file, {
-        cacheControl: "1",
-        upsert: true,
-      });
-    if (error) {
-      console.log(error);
-    } else {
-      fetchProfilePic(supabase).then((resp) => {
-        const isThereProfilePic = resp.find(
-          (element) => element.name === "profilePic"
-        );
-        if (isThereProfilePic) setProfileImage(isThereProfilePic);
-      });
-    }
-  }
   useEffect(() => {
     const token = localStorage.getItem("rondelli_token");
     if (!token) {
@@ -74,7 +39,10 @@ export default function Profile() {
     <Container>
       <PhotoContainer>
         <ProfilePic>
-          <input onChange={(e) => uploadProfilePic(e)} type="file"></input>
+          <input
+            onChange={(e) => uploadProfilePic(e, supabase, setProfileImage)}
+            type="file"
+          ></input>
           {profileImg.name !== undefined && (
             <img
               src={process.env.REACT_APP_PROFILE + profileImg.name}
@@ -97,7 +65,9 @@ export default function Profile() {
           return (
             <Art key={i}>
               <input
-                onChange={(event) => uploadNewArt(event, e.id)}
+                onChange={(event) =>
+                  uploadNewArt(event, e.id, supabase, setArts)
+                }
                 type="file"
               ></input>
               {isThereArtForThisSlot && (

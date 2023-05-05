@@ -36,7 +36,7 @@ export default function AuthPage() {
           onClick={() => setregistering(false)}
           className="letterPattern"
         >
-          Já possui cadastro? Faça login !
+          JÁ POSSUI CADASTRO? FAÇA LOGIN !
         </RegistrationLink>
       )}
     </Container>
