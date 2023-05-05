@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "../../assets/Container";
 import { StudioName } from "../../assets/StudioName";
 
-
 export default function AuthPage() {
   const [registering, setregistering] = useState(false);
   const navigate = useNavigate();
@@ -21,26 +20,31 @@ export default function AuthPage() {
     <Container>
       <StudioName className="letterPattern">RONDELLI TATTOO</StudioName>
       {registering ? (
-        <RegistrationForm  setregistering={setregistering} />
+        <RegistrationForm setregistering={setregistering} />
       ) : (
         <LoginForm />
       )}
-      {!registering && (
+      {!registering ? (
         <RegistrationLink
           onClick={() => setregistering(true)}
           className="letterPattern"
         >
           É NOVO POR AQUI ? CADASTRE-SE !
         </RegistrationLink>
+      ) : (
+        <RegistrationLink
+          onClick={() => setregistering(false)}
+          className="letterPattern"
+        >
+          Já possui cadastro? Faça login !
+        </RegistrationLink>
       )}
     </Container>
   );
 }
 
-
 const RegistrationLink = styled.a`
   font-size: 4vw;
 
   -webkit-text-stroke: 0.2vw black;
-
 `;
