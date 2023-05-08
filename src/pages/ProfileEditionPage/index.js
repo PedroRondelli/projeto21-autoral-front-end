@@ -8,6 +8,7 @@ import editProfile from "../../services/editProfileApi";
 import ProfilePicContext from "../../contexts/profilePicContext";
 import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { checkProfileImage } from "../../auxiliaries/checkProfileImage";
 export default function EditionProfile() {
   const supabase = useSupabaseClient();
   const [formDone, setFormDone] = useState(false);
@@ -36,13 +37,9 @@ export default function EditionProfile() {
     } else {
       setFormDone(false);
     }
-    fetchProfilePic(supabase).then((resp) => {
-      const isThereProfilePic = resp.find(
-        (element) => element.name === "profilePic"
-      );
-      if (isThereProfilePic) setProfileImage(isThereProfilePic);
-    });
+    fetchProfilePic(supabase).then((resp) => checkProfileImage(resp,setProfileImage));
   });
+
   return (
     <Container>
       <Form>
