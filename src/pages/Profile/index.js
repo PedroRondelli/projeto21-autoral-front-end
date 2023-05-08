@@ -8,9 +8,9 @@ import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 import ProfilePicContext from "../../contexts/profilePicContext";
 import logout from "../../services/logout";
 import backGroundImage from "../../assets/images/backGroundImage.jpg";
-import { uploadNewArt } from "../../auxiliaries/uploadArt";
 import { ProfilePicSlot } from "../../components/ProfilePicSlot";
 import { checkProfileImage } from "../../auxiliaries/checkProfileImage";
+import { separatesArtsIntoSlots } from "../../auxiliaries/separatesArtsIntoSlots";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
@@ -42,29 +42,7 @@ export default function Profile() {
         ></ion-icon>
       </PhotoContainer>
       <Portfolio>
-        {slots.map((e, i) => {
-          const isThereArtForThisSlot = arts.find(
-            (element) => element.name.replace("slot", "") === e.id.toString()
-          );
-          return (
-            <Art key={i}>
-              <input
-                onChange={(event) =>
-                  uploadNewArt(event, e.id, supabase, setArts)
-                }
-                type="file"
-              ></input>
-              {isThereArtForThisSlot && (
-                <img
-                  src={
-                    process.env.REACT_APP_BUCKET + isThereArtForThisSlot.name
-                  }
-                  alt={`Art${e.id}`}
-                />
-              )}
-            </Art>
-          );
-        })}
+        {slots.map((e, i) => separatesArtsIntoSlots(arts,e,supabase,setArts))}
       </Portfolio>
     </Container>
   );
@@ -99,32 +77,6 @@ const PhotoContainer = styled.div`
     button {
       margin-top: 15px;
     }
-  }
-`;
-
-const Art = styled.label`
-  height: 250px;
-  width: 20%;
-  border-radius: 32px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-
-  img {
-    height: 100%;
-    width: 100%;
-    border-radius: 32px;
-  }
-
-  input {
-    display: none;
-  }
-  cursor: pointer;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    height: 300px;
-    margin: 10px auto;
   }
 `;
 
