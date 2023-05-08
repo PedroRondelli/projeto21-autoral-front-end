@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import profilePic from "../../assets/images/profile.jpeg";
 import { ReadyButton } from "../../assets/ReadyButton";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import fetchArts from "../../auxiliaries/fetchArts";
@@ -10,14 +9,14 @@ import ProfilePicContext from "../../contexts/profilePicContext";
 import logout from "../../services/logout";
 import backGroundImage from "../../assets/images/backGroundImage.jpg";
 import { uploadNewArt } from "../../auxiliaries/uploadArt";
-import { uploadProfilePic } from "../../auxiliaries/uploadProfilePic";
 import { ProfilePicSlot } from "../../components/ProfilePicSlot";
+import { checkProfileImage } from "../../auxiliaries/checkProfileImage";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
   const slots = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
   const [arts, setArts] = useState([]);
-  const { profileImg, setProfileImage } = useContext(ProfilePicContext);
+  const { setProfileImage } = useContext(ProfilePicContext);
 
   const navigate = useNavigate();
 
@@ -28,12 +27,7 @@ export default function Profile() {
     }
 
     fetchArts(supabase).then((resp) => setArts(resp));
-    fetchProfilePic(supabase).then((resp) => {
-      const isThereProfilePic = resp.find(
-        (element) => element.name === "profilePic"
-      );
-      if (isThereProfilePic) setProfileImage(isThereProfilePic);
-    });
+    fetchProfilePic(supabase).then((resp) => checkProfileImage(resp,setProfileImage));
   }, []);
 
   return (
@@ -107,21 +101,7 @@ const PhotoContainer = styled.div`
     }
   }
 `;
-const ProfilePic = styled.label`
-  width: 140px;
-  height: 140px;
 
-  background: url(${profilePic});
-  background-size: 100%;
-
-  input {
-    display: none;
-  }
-  cursor: pointer;
-
-  border-radius: 70px;
-  filter: drop-shadow(0px 10px 4px rgba(0, 0, 0, 0.35));
-`;
 const Art = styled.label`
   height: 250px;
   width: 20%;
