@@ -11,6 +11,7 @@ import backGroundImage from "../../assets/images/backGroundImage.jpg";
 import { ProfilePicSlot } from "../../components/ProfilePicSlot";
 import { checkProfileImage } from "../../auxiliaries/checkProfileImage";
 import { separatesArtsIntoSlots } from "../../auxiliaries/separatesArtsIntoSlots";
+import checkIfLocalStorageHasAToken from "../../auxiliaries/checkIfLocalStorageHasAToken";
 
 export default function Profile() {
   const supabase = useSupabaseClient();
@@ -21,13 +22,11 @@ export default function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("rondelli_token");
-    if (!token) {
-      navigate("/");
-    }
-
+    checkIfLocalStorageHasAToken(navigate);
     fetchArts(supabase).then((resp) => setArts(resp));
-    fetchProfilePic(supabase).then((resp) => checkProfileImage(resp,setProfileImage));
+    fetchProfilePic(supabase).then((resp) =>
+      checkProfileImage(resp, setProfileImage)
+    );
   }, []);
 
   return (
@@ -42,7 +41,9 @@ export default function Profile() {
         ></ion-icon>
       </PhotoContainer>
       <Portfolio>
-        {slots.map((e, i) => separatesArtsIntoSlots(arts,e,supabase,setArts))}
+        {slots.map((e, i) =>
+          separatesArtsIntoSlots(arts, e, supabase, setArts)
+        )}
       </Portfolio>
     </Container>
   );

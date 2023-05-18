@@ -5,15 +5,13 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../assets/Container";
 import { StudioName } from "../../assets/StudioName";
+import checkIfLocalStorageHasAToken from "../../auxiliaries/checkIfLocalStorageHasAToken";
 
 export default function AuthPage() {
   const [registering, setregistering] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem("rondelli_token");
-    if (token) {
-      navigate("/profile");
-    }
+    checkIfLocalStorageHasAToken(navigate);
   });
 
   return (

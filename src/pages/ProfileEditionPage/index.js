@@ -9,6 +9,7 @@ import ProfilePicContext from "../../contexts/profilePicContext";
 import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { checkProfileImage } from "../../auxiliaries/checkProfileImage";
+import checkIfLocalStorageHasAToken from "../../auxiliaries/checkIfLocalStorageHasAToken";
 export default function EditionProfile() {
   const supabase = useSupabaseClient();
   const [formDone, setFormDone] = useState(false);
@@ -22,10 +23,7 @@ export default function EditionProfile() {
   const { profileImg, setProfileImage } = useContext(ProfilePicContext);
   const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem("rondelli_token");
-    if (!token) {
-      navigate("/");
-    }
+    checkIfLocalStorageHasAToken(navigate);
     if (
       form.name !== "" &&
       form.nickname !== "" &&
