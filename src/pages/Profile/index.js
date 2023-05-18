@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReadyButton } from "../../assets/ReadyButton";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import fetchArts from "../../auxiliaries/fetchArts";
 import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 import ProfilePicContext from "../../contexts/profilePicContext";
@@ -18,12 +18,12 @@ export default function Profile() {
   const slots = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
   const [arts, setArts] = useState([]);
   const { setProfileImage } = useContext(ProfilePicContext);
-
+  const user = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
     checkIfLocalStorageHasAToken(navigate);
-    fetchArts(supabase).then((resp) => setArts(resp));
+    fetchArts(supabase, user).then((resp) => setArts(resp));
     fetchProfilePic(supabase).then((resp) =>
       checkProfileImage(resp, setProfileImage)
     );
