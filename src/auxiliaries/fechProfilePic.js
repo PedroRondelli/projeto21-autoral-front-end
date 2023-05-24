@@ -1,4 +1,4 @@
-export default async function fetchProfilePic(supabase) {
+export default async function fetchProfilePic(supabase,user) {
     try {
       const { data, error } = await supabase.storage.from("profilePic").list('public',{
           limit: 5,

@@ -20,14 +20,13 @@ export default function Profile() {
   const { setProfileImage } = useContext(ProfilePicContext);
   const user = useUser();
   const navigate = useNavigate();
-
   useEffect(() => {
     checkIfLocalStorageHasAToken(navigate);
     fetchArts(supabase, user).then((resp) => setArts(resp));
-    fetchProfilePic(supabase).then((resp) =>
+    fetchProfilePic(supabase, user).then((resp) =>
       checkProfileImage(resp, setProfileImage)
     );
-  }, []);
+  }, [user, setProfileImage, supabase, navigate]);
 
   return (
     <Container>
@@ -42,7 +41,7 @@ export default function Profile() {
       </PhotoContainer>
       <Portfolio>
         {slots.map((e, i) =>
-          separatesArtsIntoSlots(arts, e, supabase, setArts)
+          separatesArtsIntoSlots(arts, e, supabase, setArts, user)
         )}
       </Portfolio>
     </Container>

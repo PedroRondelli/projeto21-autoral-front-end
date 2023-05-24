@@ -1,31 +1,33 @@
 import styled from "styled-components";
 import { uploadNewArt } from "./uploadArt";
 
-export function separatesArtsIntoSlots(arts,e,supabase,setArts){
-    const isThereArtForThisSlot = arts.find(
-      (element) => element.name.replace("slot", "") === e.id.toString()
-    );
-    return (
-      <Art key={e.id}>
-        <input
-          onChange={(event) =>
-            uploadNewArt(event, e.id, supabase, setArts)
+export function separatesArtsIntoSlots(arts, e, supabase, setArts, user) {
+  const isThereArtForThisSlot = arts.find(
+    (element) => element.name.replace("slot", "") === e.id.toString()
+  );
+  return (
+    <Art key={e.id}>
+      <input
+        onChange={(event) => uploadNewArt(event, e.id, supabase, setArts, user)}
+        type="file"
+      ></input>
+      {isThereArtForThisSlot && (
+        <img
+          src={
+            process.env.REACT_APP_BUCKET +
+            user.id +
+            "/" +
+            isThereArtForThisSlot.name +
+            `?t=${isThereArtForThisSlot.updated_at}`
           }
-          type="file"
-        ></input>
-        {isThereArtForThisSlot && (
-          <img
-            src={
-              process.env.REACT_APP_BUCKET + isThereArtForThisSlot.name
-            }
-            alt={`Art${e.id}`}
-          />
-        )}
-      </Art>
-    );
-  }
+          alt={`Art${e.id}`}
+        />
+      )}
+    </Art>
+  );
+}
 
-  const Art = styled.label`
+const Art = styled.label`
   height: 250px;
   width: 20%;
   border-radius: 32px;

@@ -12,7 +12,7 @@ export default function AuthPage() {
   const navigate = useNavigate();
   useEffect(() => {
     checkIfLocalStorageHasAToken(navigate);
-  });
+  },[navigate]);
 
   return (
     <Container>
