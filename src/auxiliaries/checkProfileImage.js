@@ -1,6 +1,6 @@
-export function checkProfileImage(resp,setProfileImage){
+export function checkProfileImage(resp,setProfileImage,user){
     const isThereProfilePic = resp.find(
-      (element) => element.name === "profilePic"
+      (element) => element.name === user.id
     );
     if (isThereProfilePic) setProfileImage(isThereProfilePic);
   }

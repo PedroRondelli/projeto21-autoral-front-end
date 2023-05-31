@@ -24,7 +24,7 @@ export default function Profile() {
     checkIfLocalStorageHasAToken(navigate);
     fetchArts(supabase, user).then((resp) => setArts(resp));
     fetchProfilePic(supabase, user).then((resp) =>
-      checkProfileImage(resp, setProfileImage)
+      checkProfileImage(resp, setProfileImage,user)
     );
   }, [user, setProfileImage, supabase, navigate]);
 

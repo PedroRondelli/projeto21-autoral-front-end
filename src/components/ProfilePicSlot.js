@@ -2,24 +2,31 @@ import styled from "styled-components";
 import { uploadProfilePic } from "../auxiliaries/uploadProfilePic";
 import { useContext } from "react";
 import ProfilePicContext from "../contexts/profilePicContext";
-import profilePic from"../assets/images/profile.jpeg"
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import profilePic from "../assets/images/profile.jpeg";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
-export function ProfilePicSlot(){
-    const { profileImg, setProfileImage } = useContext(ProfilePicContext);
-    const supabase = useSupabaseClient();
-    return(<ProfilePic>
-        <input
-          onChange={(e) => uploadProfilePic(e, supabase, setProfileImage)}
-          type="file"
-        ></input>
-        {profileImg.name !== undefined && (
-          <img
-            src={process.env.REACT_APP_PROFILE + profileImg.name}
-            alt="profile pic"
-          />
-        )}
-      </ProfilePic>)
+export function ProfilePicSlot() {
+  const { profileImg, setProfileImage } = useContext(ProfilePicContext);
+  const supabase = useSupabaseClient();
+  const user = useUser();
+  return (
+    <ProfilePic>
+      <input
+        onChange={(e) => uploadProfilePic(e, supabase, setProfileImage, user)}
+        type="file"
+      ></input>
+      {profileImg.name !== undefined && (
+        <img
+          src={
+            process.env.REACT_APP_PROFILE +
+            profileImg.name +
+            `?t=${profileImg.updated_at}`
+          }
+          alt="profile pic"
+        />
+      )}
+    </ProfilePic>
+  );
 }
 
 const ProfilePic = styled.label`

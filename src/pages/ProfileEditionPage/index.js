@@ -7,7 +7,7 @@ import { ReadyButton } from "../../assets/ReadyButton";
 import editProfile from "../../services/editProfileApi";
 import ProfilePicContext from "../../contexts/profilePicContext";
 import fetchProfilePic from "../../auxiliaries/fechProfilePic";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { checkProfileImage } from "../../auxiliaries/checkProfileImage";
 import checkIfLocalStorageHasAToken from "../../auxiliaries/checkIfLocalStorageHasAToken";
 export default function EditionProfile() {
@@ -22,6 +22,7 @@ export default function EditionProfile() {
   });
   const { profileImg, setProfileImage } = useContext(ProfilePicContext);
   const navigate = useNavigate();
+  const user = useUser();
   useEffect(() => {
     checkIfLocalStorageHasAToken(navigate);
     if (
@@ -35,8 +36,20 @@ export default function EditionProfile() {
     } else {
       setFormDone(false);
     }
-    fetchProfilePic(supabase).then((resp) => checkProfileImage(resp,setProfileImage));
-  });
+    fetchProfilePic(supabase, user).then((resp) =>
+      checkProfileImage(resp, setProfileImage, user)
+    );
+  }, [
+    navigate,
+    supabase,
+    setProfileImage,
+    user,
+    form.name,
+    form.nickname,
+    form.about,
+    form.specialties,
+    form.thank,
+  ]);
 
   return (
     <Container>
@@ -79,6 +92,7 @@ export default function EditionProfile() {
             alt="profile pic"
           />
         )}
+
         <ReadyButton
           formDone={!formDone}
           onClick={(e) => editProfile(form, navigate)}
@@ -127,7 +141,7 @@ const Form = styled.form`
   }
   @media (max-width: 414px) {
     width: 100vw;
-    height:70vh;
+    height: 70vh;
     justify-content: flex-start;
     input {
       font-size: 3vw;

@@ -4,14 +4,17 @@ export default async function fetchProfilePic(supabase,user) {
           limit: 5,
           offset: 0,
           sortBy: { column: 'name', order: 'asc' },
+          search:user.id
         });
   
       if (error) {
         return error;
       } else {
+        console.log("vasco",data)
         return data;
       }
     } catch (error) {
       return error;
     }
   }
+  
