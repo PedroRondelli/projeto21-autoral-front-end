@@ -4,6 +4,7 @@ import AuthPage from "./pages/AuthPage";
 import EditionProfile from "./pages/ProfileEditionPage";
 import Profile from "./pages/Profile";
 import { ProfilePicProvider } from "./contexts/profilePicContext";
+import CustomerPage from "./pages/CustomerPage";
 function App() {
   return (
     <>
@@ -14,7 +15,7 @@ function App() {
             <Route path="/" element={<AuthPage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/edition" element={<EditionProfile />} />
-            <Route path="/customer"  />
+            <Route path="/customer" element={<CustomerPage/>}  />
           </Routes>
         </ProfilePicProvider>
       </BrowserRouter>
