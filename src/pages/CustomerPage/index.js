@@ -3,15 +3,23 @@ import { Container } from "../../assets/Container";
 import { StudioName } from "../../assets/StudioName";
 import { ReadyButton } from "../../assets/ReadyButton";
 import { AuthForm } from "../../assets/AuthForm";
+import { useContext } from "react";
+import CustomerContext from "../../contexts/customerContext";
 
 export default function CustomerPage() {
+  const { customer, setCustomer } = useContext(CustomerContext);
   return (
     <Container>
       <StudioName className="letterPattern">RONDELLI TATTOO</StudioName>
       <WelcomeMessage className="letterPattern">
         SEJA BEM VINDO (a)!
       </WelcomeMessage>
-      <AuthForm>
+      <AuthForm
+        onSubmit={(e) => {
+          e.preventDefault();
+          setCustomer({ ...customer, name: e.target[0].value });
+        }}
+      >
         <input placeholder="SEU NOME"></input>
         <ReadyButton>PRONTO</ReadyButton>
       </AuthForm>
