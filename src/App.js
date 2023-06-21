@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import { ProfilePicProvider } from "./contexts/profilePicContext";
 import CustomerPage from "./pages/CustomerPage";
 import { CustomerProvider } from "./contexts/customerContext";
+import SelectionPage from "./pages/SelectionPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/edition" element={<EditionProfile />} />
               <Route path="/customer" element={<CustomerPage />} />
+              <Route path="/selection" element={<SelectionPage/>}/>
             </Routes>
           </CustomerProvider>
         </ProfilePicProvider>

@@ -5,9 +5,15 @@ import { ReadyButton } from "../../assets/ReadyButton";
 import { AuthForm } from "../../assets/AuthForm";
 import { useContext } from "react";
 import CustomerContext from "../../contexts/customerContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function CustomerPage() {
   const { customer, setCustomer } = useContext(CustomerContext);
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(customer.name!=="")navigate("/selection")
+  },[customer.name,navigate])
   return (
     <Container>
       <StudioName className="letterPattern">RONDELLI TATTOO</StudioName>
@@ -18,6 +24,7 @@ export default function CustomerPage() {
         onSubmit={(e) => {
           e.preventDefault();
           setCustomer({ ...customer, name: e.target[0].value });
+
         }}
       >
         <input placeholder="SEU NOME"></input>
