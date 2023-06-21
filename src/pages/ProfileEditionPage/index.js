@@ -65,7 +65,7 @@ export default function EditionProfile() {
 
         <ReadyButton
           formDone={!formDone}
-          onClick={(e) => editProfile(form, navigate)}
+          onClick={() => editProfile(form, navigate)}
         >
           PRONTO
         </ReadyButton>

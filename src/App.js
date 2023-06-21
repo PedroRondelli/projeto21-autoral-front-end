@@ -14,6 +14,7 @@ function App() {
             <Route path="/" element={<AuthPage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/edition" element={<EditionProfile />} />
+            <Route path="/customer"  />
           </Routes>
         </ProfilePicProvider>
       </BrowserRouter>
