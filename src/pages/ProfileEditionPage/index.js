@@ -10,6 +10,7 @@ import fetchProfilePic from "../../auxiliaries/fechProfilePic";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { checkProfileImage } from "../../auxiliaries/checkProfileImage";
 import checkIfLocalStorageHasAToken from "../../auxiliaries/checkIfLocalStorageHasAToken";
+import DescriptionForm from "../../components/DescriptionForm";
 export default function EditionProfile() {
   const supabase = useSupabaseClient();
   const [formDone, setFormDone] = useState(false);
@@ -53,38 +54,7 @@ export default function EditionProfile() {
 
   return (
     <Container>
-      <Form>
-        <input
-          required
-          onChange={(e) => handleForm(e, form, setForm)}
-          name="name"
-          placeholder="NOME"
-        ></input>
-        <input
-          onChange={(e) => handleForm(e, form, setForm)}
-          required
-          name="nickname"
-          placeholder="APELIDO"
-        ></input>
-        <input
-          onChange={(e) => handleForm(e, form, setForm)}
-          required
-          name="about"
-          placeholder="SOBRE VOCÊ"
-        ></input>
-        <input
-          onChange={(e) => handleForm(e, form, setForm)}
-          required
-          name="specialties"
-          placeholder="ESPECIALIDADES"
-        ></input>
-        <input
-          onChange={(e) => handleForm(e, form, setForm)}
-          required
-          name="thank"
-          placeholder="AGRADECIMENTO"
-        ></input>
-      </Form>
+      <DescriptionForm  form={form} setForm={setForm} />
       <PhotoContainer>
         {profileImg.name !== undefined && (
           <img
