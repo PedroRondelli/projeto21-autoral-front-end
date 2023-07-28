@@ -72,7 +72,7 @@ export default function EditionProfile() {
     </Container>
   );
 }
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   background-image: url(${backGroundImage});
   background-size: 100%;
@@ -81,7 +81,7 @@ const Container = styled.div`
   }
   box-sizing: border-box;
 `;
-const PhotoContainer = styled.div`
+export const PhotoContainer = styled.div`
   width: 50vw;
   height: 100vh;
   display: flex;

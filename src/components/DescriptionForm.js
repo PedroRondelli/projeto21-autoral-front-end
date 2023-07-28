@@ -39,7 +39,7 @@ export default function DescriptionForm({form,setForm}) {
   );
 }
 
-const Form = styled.form`
+export const Form = styled.form`
   width: 50vw;
   height: 100vh;
 
