@@ -53,7 +53,7 @@ export default function EditionProfile() {
 
   return (
     <Container>
-      <DescriptionForm  form={form} setForm={setForm} />
+      <DescriptionForm form={form} setForm={setForm} />
       <PhotoContainer>
         {profileImg.name !== undefined && (
           <img
@@ -90,12 +90,26 @@ export const PhotoContainer = styled.div`
   justify-content: space-between;
   box-sizing: border-box;
 
+  position: relative;
   padding: 20px;
   img {
     width: 140px;
     height: 140px;
     background: blue;
     border-radius: 70px;
+  }
+
+  icons {
+    position: absolute;
+    top: 50%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    ion-icon{
+      color: black;
+      font-size: 200%;
+      cursor: pointer;
+    }
   }
   @media (max-width: 414px) {
     width: 100vw;

@@ -5,11 +5,13 @@ import { useState } from "react";
 import { getArtistProfiles } from "../../services/getArtistProfiles";
 import { Form } from "../../components/DescriptionForm";
 import { Container, PhotoContainer } from "../ProfileEditionPage";
+import { ReadyButton } from "../../assets/ReadyButton";
+import { changeArtist } from "../../auxiliaries/changeArtist";
 
 export default function SelectionPage() {
-  const { customer, setCustomer, listOfAllArtists, setList } =
-    useContext(CustomerContext);
-
+  const { customer, listOfAllArtists, setList } = useContext(CustomerContext);
+  const [turn, setTurn] = useState(0);
+  console.log(turn);
   const navigate = useNavigate();
   useEffect(() => {
     if (customer.name === "") navigate("/customer");
@@ -19,7 +21,27 @@ export default function SelectionPage() {
   return (
     <Container>
       <Form></Form>
-      <PhotoContainer></PhotoContainer>
+      <PhotoContainer>
+        <img alt="profile pic" />
+        <icons>
+          <ion-icon
+            onClick={() =>
+              changeArtist("backward", setTurn, turn, listOfAllArtists.length)
+            }
+            name="arrow-back-circle"
+          ></ion-icon>
+          <ion-icon
+            onClick={() =>
+              changeArtist("forward", setTurn, turn, listOfAllArtists.length)
+            }
+            name="arrow-forward-circle"
+          ></ion-icon>
+        </icons>
+        <ReadyButton>ESCOLHER</ReadyButton>
+      </PhotoContainer>
     </Container>
   );
 }
+
+//<ion-icon name="arrow-back-circle"></ion-icon>
+//<ion-icon name="arrow-forward-circle"></ion-icon>
