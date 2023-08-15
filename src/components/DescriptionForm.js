@@ -53,6 +53,8 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: space-between;
 
+
+
   input {
     border-radius: 32px;
     height: 11vh;
@@ -68,7 +70,7 @@ export const Form = styled.form`
   }
   @media (max-width: 414px) {
     width: 100vw;
-    height: 70vh;
+    min-height: 70vh;
     justify-content: flex-start;
     input {
       font-size: 3vw;

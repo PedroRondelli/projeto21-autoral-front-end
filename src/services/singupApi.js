@@ -1,4 +1,5 @@
 import axios from "axios";
+import { signUpUserSupaId } from "./signUpUserSupaId";
 
 export default function singup(e, form, setregistering, supabase) {
   e.preventDefault();
@@ -14,7 +15,8 @@ export default function singup(e, form, setregistering, supabase) {
         if (error) {
           console.log(error);
         } else {
-          console.log(data);
+          console.log(data.user.id);
+          signUpUserSupaId(data.user.id, form.email);
         }
       } catch (error) {
         console.log(error);
