@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default function singin(e, form, navigate, supabase) {
   e.preventDefault();
-    axios
+  axios
     .post(process.env.REACT_APP_BACKURL + "/tattoArtist/login", form)
     .then(async (resp) => {
       try {
@@ -22,6 +22,6 @@ export default function singin(e, form, navigate, supabase) {
       navigate("/profile");
     })
     .catch((error) => {
-      alert(error.response.data);
+      console.log(error.response);
     });
 }

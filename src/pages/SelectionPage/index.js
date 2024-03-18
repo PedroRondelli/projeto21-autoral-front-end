@@ -19,7 +19,7 @@ export default function SelectionPage() {
     getArtistProfiles(setList);
   }, [customer.name, navigate, setList]);
   if (listOfAllArtists.length === 0) return <></>;
-  
+
   return (
     <Container>
       <Form>
@@ -48,7 +48,12 @@ export default function SelectionPage() {
       </Form>
 
       <PhotoContainer>
-        <img alt="profile pic" />
+        <img
+          alt="profile pic"
+          src={
+            process.env.REACT_APP_PROFILE + listOfAllArtists[turn].users.supaId
+          }
+        />
         <icons>
           <ion-icon
             onClick={() =>
@@ -108,4 +113,3 @@ const Art = styled.div`
   background-color: white;
   cursor: pointer;
 `;
-

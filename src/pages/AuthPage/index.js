@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "../../assets/Container";
 import { StudioName } from "../../assets/StudioName";
 import checkIfLocalStorageHasAToken from "../../auxiliaries/checkIfLocalStorageHasAToken";
+import testeBackend from "../../services/testeBackend";
 
 export default function AuthPage() {
   const [registering, setregistering] = useState(false);
@@ -16,7 +17,7 @@ export default function AuthPage() {
 
   return (
     <Container>
-      <StudioName className="letterPattern">RONDELLI TATTOO</StudioName>
+      <StudioName onClick={testeBackend} className="letterPattern">RONDELLI TATTOO</StudioName>
       {registering ? (
         <RegistrationForm setregistering={setregistering} />
       ) : (
