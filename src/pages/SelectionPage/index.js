@@ -8,17 +8,25 @@ import { Container, PhotoContainer } from "../ProfileEditionPage";
 import { ReadyButton } from "../../assets/ReadyButton";
 import { changeArtist } from "../../auxiliaries/changeArtist";
 import styled from "styled-components";
+import fetchArts from "../../auxiliaries/fetchArts";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function SelectionPage() {
   const { customer, listOfAllArtists, setList } = useContext(CustomerContext);
   const [turn, setTurn] = useState(0);
+  const supabase = useSupabaseClient();
+  const [arts, setArts] = useState([]);
   const navigate = useNavigate();
-  console.log(listOfAllArtists[turn]);
   useEffect(() => {
     if (customer.name === "") navigate("/customer");
     getArtistProfiles(setList);
-  }, [customer.name, navigate, setList]);
+    if (listOfAllArtists.length !== 0)
+      fetchArts(supabase, listOfAllArtists[turn].users).then((resp) =>
+        setArts(resp)
+      );
+  }, [customer.name, navigate,setList,turn]);
   if (listOfAllArtists.length === 0) return <></>;
+  console.log(arts)
 
   return (
     <Container>
