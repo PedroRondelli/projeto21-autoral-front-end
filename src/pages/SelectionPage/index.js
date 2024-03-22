@@ -10,9 +10,11 @@ import { changeArtist } from "../../auxiliaries/changeArtist";
 import styled from "styled-components";
 import fetchArts from "../../auxiliaries/fetchArts";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { fetchArtstoSelecion } from "../../auxiliaries/fetchArtstoSelection";
 
 export default function SelectionPage() {
   const { customer, listOfAllArtists, setList } = useContext(CustomerContext);
+  const slots = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
   const [turn, setTurn] = useState(0);
   const supabase = useSupabaseClient();
   const [arts, setArts] = useState([]);
@@ -24,9 +26,9 @@ export default function SelectionPage() {
       fetchArts(supabase, listOfAllArtists[turn].users).then((resp) =>
         setArts(resp)
       );
-  }, [customer.name, navigate,setList,turn]);
+  }, [customer.name, navigate,supabase ,setList, turn]);
   if (listOfAllArtists.length === 0) return <></>;
-  console.log(arts)
+  console.log(arts);
 
   return (
     <Container>
@@ -46,10 +48,14 @@ export default function SelectionPage() {
           <Block>
             <Topic>{`DESTAQUES :`}</Topic>
             <RollOfArts>
-              <Art></Art>
-              <Art></Art>
-              <Art></Art>
-              <Art></Art>
+              {slots.map((e, i) =>
+                fetchArtstoSelecion(
+                  arts,
+                  e,
+                  supabase,
+                  listOfAllArtists[turn]
+                )
+              )}
             </RollOfArts>
           </Block>
         </ArtistHistory>

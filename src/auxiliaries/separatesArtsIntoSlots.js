@@ -5,6 +5,7 @@ export function separatesArtsIntoSlots(arts, e, supabase, setArts, user) {
   const isThereArtForThisSlot = arts.find(
     (element) => element.name.replace("slot", "") === e.id.toString()
   );
+  const identity = user.id ? user.id : user.supaId;
   return (
     <Art key={e.id}>
       <input
@@ -15,7 +16,7 @@ export function separatesArtsIntoSlots(arts, e, supabase, setArts, user) {
         <img
           src={
             process.env.REACT_APP_BUCKET +
-            user.id +
+            identity +
             "/" +
             isThereArtForThisSlot.name +
             `?t=${isThereArtForThisSlot.updated_at}`
