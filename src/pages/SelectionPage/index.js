@@ -82,7 +82,7 @@ export default function SelectionPage() {
             name="arrow-forward-circle"
           ></ion-icon>
         </icons>
-        <ReadyButton>ESCOLHER</ReadyButton>
+        <ReadyButton onClick={()=>navigate("/success")}>ESCOLHER</ReadyButton>
       </PhotoContainer>
     </Container>
   );
