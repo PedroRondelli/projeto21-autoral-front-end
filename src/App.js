@@ -7,6 +7,7 @@ import { ProfilePicProvider } from "./contexts/profilePicContext";
 import CustomerPage from "./pages/CustomerPage";
 import { CustomerProvider } from "./contexts/customerContext";
 import SelectionPage from "./pages/SelectionPage";
+import SuccessPage from "./pages/SuccessPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/edition" element={<EditionProfile />} />
               <Route path="/customer" element={<CustomerPage />} />
               <Route path="/selection" element={<SelectionPage/>}/>
+              <Route path="/success" element={<SuccessPage/>}/>
             </Routes>
           </CustomerProvider>
         </ProfilePicProvider>
